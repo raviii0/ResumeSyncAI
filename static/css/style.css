@@ -1,0 +1,35 @@
+body{
+    background:#F5F7FB;
+}
+
+.hero{
+    min-height:90vh;
+}
+
+h1{
+    color:#2563EB;
+}
+
+.lead{
+    color:#555;
+}
+
+img{
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-15px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
