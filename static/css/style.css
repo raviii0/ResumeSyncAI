@@ -33,3 +33,15 @@ transform:translateY(0px);
 }
 
 }
+.card{
+border:none;
+}
+
+.form-control{
+height:45px;
+border-radius:10px;
+}
+
+.btn{
+border-radius:10px;
+}
