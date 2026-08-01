@@ -89,8 +89,8 @@ def analyze():
     found_skills = []
     missing_skills = []
 
-    print("==========")
-    print(resume_text)
+    print("JOB DESCRIPTION:")
+    print(job_description)
     print("==========")
     
     resume_lower = resume_text.lower()
