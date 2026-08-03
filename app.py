@@ -82,6 +82,15 @@ def analyze():
 
     ats_score = round(similarity[0][1] * 100, 2)
 
+    # Progress Bar Color
+
+    if ats_score >= 80:
+        color = "success"
+    elif ats_score >= 60:
+        color = "warning"
+    else:
+        color = "danger"
+
     # Skills
     skills = job_description.splitlines()
     skills = [skill.strip() for skill in skills if skill.strip()]
@@ -134,7 +143,21 @@ AI Resume Analysis
 
 <hr>
 
-<h3>ATS Score : {ats_score}%</h3>
+<h3 class="mb-3">
+ATS Score : {ats_score}%
+</h3>
+
+<div class="progress" style="height:35px;">
+
+<div class="progress-bar bg-{color}"
+role="progressbar"
+style="width:{ats_score}%">
+
+{ats_score}%
+
+</div>
+
+</div>
 
 <h4 class="mt-4 text-primary">
 Skills Found
