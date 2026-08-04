@@ -3,6 +3,11 @@ import os
 import pdfplumber
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from Skills.skills import SKILLS
+import google.generativeai as genai
+
+genai.configure(api_key="AQ.Ab8RN6KH898wzpP-LYusB25MOKN6HihycgUWjXjUrmHmKXSUFg")
+model = genai.GenerativeModel("gemini-2.0-flash-exp")
 
 app = Flask(__name__)
 
@@ -46,6 +51,8 @@ def register():
 @app.route("/upload")
 def upload():
     return render_template("upload.html")
+
+
 # ---------------- ANALYZE ----------------
 
 @app.route("/analyze", methods=["POST"])
@@ -59,7 +66,7 @@ def analyze():
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
     file.save(filepath)
 
-    # Read PDF
+    # Read Resume PDF
     resume_text = ""
 
     with pdfplumber.open(filepath) as pdf:
@@ -71,19 +78,31 @@ def analyze():
     # Job Description
     job_description = request.form["job_description"]
 
-    # ATS Score
-    documents = [resume_text, job_description]
+    resume_lower = resume_text.lower()
+    job_lower = job_description.lower()# Find required skills from Job Description
+    skills = []
 
-    vectorizer = CountVectorizer()
+    for skill in SKILLS:
+        if skill.lower() in job_lower:
+            skills.append(skill)
 
-    vectors = vectorizer.fit_transform(documents)
+    found_skills = []
+    missing_skills = []
 
-    similarity = cosine_similarity(vectors)
+    # Match resume skills
+    for skill in skills:
+        if skill.lower() in resume_lower:
+            found_skills.append(skill)
+        else:
+            missing_skills.append(skill)
 
-    ats_score = round(similarity[0][1] * 100, 2)
+    # ATS Score based on matched skills
+    if len(skills) > 0:
+        ats_score = round((len(found_skills) / len(skills)) * 100, 2)
+    else:
+        ats_score = 0
 
     # Progress Bar Color
-
     if ats_score >= 80:
         color = "success"
     elif ats_score >= 60:
@@ -91,44 +110,28 @@ def analyze():
     else:
         color = "danger"
 
-    # Skills
-    skills = job_description.splitlines()
-    skills = [skill.strip() for skill in skills if skill.strip()]
-
-    found_skills = []
-    missing_skills = []
-
-    print("JOB DESCRIPTION:")
-    print(job_description)
-    print("==========")
-    
-    resume_lower = resume_text.lower()
-
-    for skill in skills:
-        if skill.lower() in resume_lower:
-            found_skills.append(skill)
-        else:
-            missing_skills.append(skill)
-            # AI Suggestions
+    # AI Suggestions
     suggestions = []
 
-    if ats_score < 60:
-        suggestions.append("Improve your resume by adding more relevant skills.")
-        suggestions.append("Use ATS-friendly formatting.")
-        suggestions.append("Add more projects and certifications.")
-    elif ats_score < 80:
-        suggestions.append("Good resume. Add more keywords from the Job Description.")
-    else:
-        suggestions.append("Excellent! Your resume is ATS Friendly.")
+    if len(missing_skills) > 0:
+        for skill in missing_skills:
+            suggestions.append(f"Add {skill} to your resume if you have experience.")
 
+    if ats_score >= 80:
+        suggestions.append("Excellent! Your resume is ATS Friendly.")
+    elif ats_score >= 60:
+        suggestions.append("Good Resume. Add the missing skills to improve your ATS score.")
+    else:
+        suggestions.append("Resume needs improvement. Add more relevant skills and projects.")
+        response = model.generate_content(f"Provide feedback on how to improve a resume with an ATS score of {ats_score}%.")
+        suggestions.extend([suggestion for suggestion in response.candidates[0].content.parts if suggestion])
     return f"""
 <!DOCTYPE html>
 <html>
 <head>
-<title>ATS Result</title>
+    <title>ATS Result</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -138,7 +141,7 @@ def analyze():
 <div class="card shadow p-5">
 
 <h1 class="text-center text-success">
-AI Resume Analysis
+🤖 AI Resume Analysis
 </h1>
 
 <hr>
@@ -147,33 +150,27 @@ AI Resume Analysis
 ATS Score : {ats_score}%
 </h3>
 
-<div class="progress" style="height:35px;">
-
-<div class="progress-bar bg-{color}"
-role="progressbar"
-style="width:{ats_score}%">
-
-{ats_score}%
-
+<div class="progress mb-4" style="height:35px;">
+    <div class="progress-bar bg-{color}"
+         role="progressbar"
+         style="width:{ats_score}%">
+        {ats_score}%
+    </div>
 </div>
 
-</div>
+<h4 class="text-primary">✅ Skills Found</h4>
 
-<h4 class="mt-4 text-primary">
-Skills Found
-</h4>
+<ul>
+{"".join(f"<li>{skill}</li>" for skill in found_skills) if found_skills else "<li>No matching skills found.</li>"}
+</ul>
 
-<p>{", ".join(found_skills) if found_skills else "No matching skills found."}</p>
+<h4 class="text-danger mt-4">❌ Missing Skills</h4>
 
-<h4 class="mt-4 text-danger">
-Missing Skills
-</h4>
+<ul>
+{"".join(f"<li>{skill}</li>" for skill in missing_skills) if missing_skills else "<li>No missing skills.</li>"}
+</ul>
 
-<p>{", ".join(missing_skills)}</p>
-
-<h4 class="mt-4 text-success">
-AI Suggestions
-</h4>
+<h4 class="text-success mt-4">💡 AI Suggestions</h4>
 
 <ul>
 {"".join(f"<li>{item}</li>" for item in suggestions)}
