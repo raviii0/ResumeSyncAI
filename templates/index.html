@@ -1,88 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Analyzer</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>PG & Hotels Finder</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
+
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">🤖 Resume Analyzer AI</a>
+<!-- ================= NAVBAR ================= -->
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<header>
 
-        <div class="collapse navbar-collapse" id="navbar">
+    <nav class="navbar">
 
-            <ul class="navbar-nav ms-auto">
+        <div class="logo">
+            <i class="fa-solid fa-hotel"></i>
+            PG & Hotels Finder
+        </div>
 
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
-                </li>
+        <ul class="nav-links">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
+            <li>
+                <a href="search.html">PG</a>
+            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+            <li>
+                <a href="search.html">Hotels</a>
+            </li>
 
-                <a href="/login" class="btn btn-light text-primary">Login</a>
-                </li>
+            <li>
+                <a href="#">About</a>
+            </li>
 
-            </ul>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+
+        </ul>
+
+        <a href="login.html" class="login-btn">
+            Login
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>
+            Find Your Perfect Stay
+        </h1>
+
+        <p>
+            Search Verified PGs & Hotels Across India
+        </p>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                placeholder="Enter City or Location">
+
+
+            <select>
+
+                <option value="">
+                    Select Type
+                </option>
+
+                <option value="pg">
+                    PG
+                </option>
+
+                <option value="hotel">
+                    Hotel
+                </option>
+
+            </select>
+
+
+            <button>
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
 
         </div>
+
     </div>
-</nav>
 
-<!-- Hero -->
-<div class="container">
+</section>
 
-    <div class="row align-items-center hero">
 
-        <div class="col-md-6">
+<!-- ================= FEATURED ================= -->
 
-            <h1 class="display-4 fw-bold">
-                Analyze Your Resume with AI
-            </h1>
+<section class="featured">
 
-            <p class="lead mt-3">
-                Get ATS Score, Missing Skills, AI Suggestions,
-                Job Match Percentage and Best Learning Resources.
+    <h2>
+        Featured PG & Hotels
+    </h2>
+
+
+    <div class="card-container">
+
+
+        <!-- CARD 1 -->
+
+        <div class="card">
+
+            <img
+                src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80"
+                alt="Comfort PG">
+
+
+            <h3>
+                Comfort PG
+            </h3>
+
+
+            <p>
+                📍 Ayodhya
             </p>
 
-           <a href="/login" class="btn btn-primary">Get Started</a>
+
+            <p>
+                ₹6,500 / Month
+            </p>
+
+
+            <a
+                href="details.html"
+                class="card-details-btn">
+
+                View Details
+
+            </a>
 
         </div>
 
-        <div class="col-md-6 text-center">
 
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                 width="320">
+
+        <!-- CARD 2 -->
+
+        <div class="card">
+
+            <img
+                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80"
+                alt="Royal Hotel">
+
+
+            <h3>
+                Royal Hotel
+            </h3>
+
+
+            <p>
+                📍 Lucknow
+            </p>
+
+
+            <p>
+                ₹2,500 / Night
+            </p>
+
+
+            <a
+                href="details.html"
+                class="card-details-btn">
+
+                View Details
+
+            </a>
+
+        </div>
+
+
+
+        <!-- CARD 3 -->
+
+        <div class="card">
+
+            <img
+                src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80"
+                alt="Student PG">
+
+
+            <h3>
+                Student PG
+            </h3>
+
+
+            <p>
+                📍 Delhi
+            </p>
+
+
+            <p>
+                ₹5,500 / Month
+            </p>
+
+
+            <a
+                href="details.html"
+                class="card-details-btn">
+
+                View Details
+
+            </a>
 
         </div>
 
     </div>
 
-</div>
+</section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ================= WHY CHOOSE US ================= -->
+
+<section class="features">
+
+    <h2>
+        Why Choose Us?
+    </h2>
+
+
+    <div class="feature-container">
+
+
+        <div class="feature-box">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            <h3>
+                Best Locations
+            </h3>
+
+            <p>
+                Find PGs and Hotels near your
+                college, office or railway station.
+            </p>
+
+        </div>
+
+
+        <div class="feature-box">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h3>
+                Affordable Price
+            </h3>
+
+            <p>
+                Compare prices and choose
+                the best stay within your budget.
+            </p>
+
+        </div>
+
+
+        <div class="feature-box">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3>
+                Verified Properties
+            </h3>
+
+            <p>
+                Find trusted properties for
+                a safe and comfortable stay.
+            </p>
+
+        </div>
+
+
+        <div class="feature-box">
+
+            <i class="fa-solid fa-star"></i>
+
+            <h3>
+                Top Ratings
+            </h3>
+
+            <p>
+                Check ratings and reviews
+                before choosing your stay.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h3>
+        PG & Hotels Finder
+    </h3>
+
+    <p>
+        Find the Best PGs & Hotels Across India
+    </p>
+
+
+    <div class="social-icons">
+
+        <i class="fab fa-facebook"></i>
+
+        <i class="fab fa-instagram"></i>
+
+        <i class="fab fa-x-twitter"></i>
+
+        <i class="fab fa-linkedin"></i>
+
+    </div>
+
+
+    <p style="margin-top:20px;">
+
+        © 2026 PG & Hotels Finder.
+        All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+<script src="js/script.js"></script>
 
 </body>
+
 </html>
