@@ -6,7 +6,7 @@ from Skills.skills import SKILLS, JOB_SKILLS
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "uploads"
-app.config["UPLOAD_FOLDER"] = UPLOAD
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
