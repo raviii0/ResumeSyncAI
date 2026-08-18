@@ -20,7 +20,7 @@ def home():
 
 # ---------------- LOGIN ----------------
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET"])
 def login():
 
     if request.method == "POST":
