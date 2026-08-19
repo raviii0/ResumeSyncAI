@@ -49,7 +49,7 @@ def upload():
 
 # ---------------- ANALYZE ----------------
 
-@app.route("/analyze", methods=["POST"])
+@app.route("/analyze", methods=["POST.Html"])
 def analyze():
 
     file = request.files["resumesync.AI"]
