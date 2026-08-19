@@ -52,7 +52,7 @@ def upload():
 @app.route("/analyze", methods=["POST"])
 def analyze():
 
-    file = request.files["rresume"]
+    file = request.files["resumesync.AI"]
 
     if file.filename == "":
         return "Please Select Resume"
